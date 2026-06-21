@@ -347,7 +347,7 @@ The `id` is never exposed to end users — the `reference` (`BK-XXXXXX`) is the 
     "cached": false,
     "passengers": 2,
     "total_unique_flights": 6,
-    "filtered_count": 4
+    "filtered_count": 6
   },
   "flights": [ ... ]
 }

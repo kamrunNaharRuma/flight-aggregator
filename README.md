@@ -20,8 +20,8 @@ Three mock providers each return the same flights in completely different JSON f
 
 ## Tech Stack
 
-| | |
-|---|---|
+| Layer | Technology |
+|-------|-----------|
 | **Framework** | Laravel 10 (PHP 8.1) |
 | **Database** | PostgreSQL |
 | **Cache** | Redis |
@@ -275,12 +275,11 @@ Interactive documentation (all endpoints, parameters, and request/response examp
 
 **[https://documenter.getpostman.com/view/10334454/2sBXwvKUJt](https://documenter.getpostman.com/view/10334454/2sBXwvKUJt)**
 
-
 **Recommended test flow:**
-1. **Search Flights (basic)** — populates Redis cache
-2. **Create Booking** — `flight_id` is pre-filled with EK585's ID
-3. Copy the `reference` from the response
-4. Paste into **Get Booking by Reference** → run
+1. **Search Flights** — populates Redis cache, copy any `flight_id` from the response
+2. **Create Booking** — paste the `flight_id`, submit with passenger details
+3. Copy the `reference` from the booking response
+4. **Get Booking by Reference** — paste the reference and run
 
 ---
 
