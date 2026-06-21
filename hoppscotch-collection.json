@@ -1,0 +1,589 @@
+{
+  "v": 1,
+  "name": "✈️ Flight Aggregator API — iBox Lab Assessment",
+  "folders": [
+
+    {
+      "v": 1,
+      "name": "🔌 Mock Providers (Raw Data)",
+      "folders": [],
+      "requests": [
+        {
+          "v": "1",
+          "id": "mock-a",
+          "name": "Provider A — raw response",
+          "method": "GET",
+          "endpoint": "http://localhost:8000/mock/providers/a",
+          "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+          "params": [],
+          "auth": { "authType": "none", "authActive": false },
+          "body": { "contentType": null, "body": null },
+          "requestVariables": []
+        },
+        {
+          "v": "1",
+          "id": "mock-b",
+          "name": "Provider B — raw response",
+          "method": "GET",
+          "endpoint": "http://localhost:8000/mock/providers/b",
+          "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+          "params": [],
+          "auth": { "authType": "none", "authActive": false },
+          "body": { "contentType": null, "body": null },
+          "requestVariables": []
+        },
+        {
+          "v": "1",
+          "id": "mock-c",
+          "name": "Provider C — raw response (Unix timestamps)",
+          "method": "GET",
+          "endpoint": "http://localhost:8000/mock/providers/c",
+          "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+          "params": [],
+          "auth": { "authType": "none", "authActive": false },
+          "body": { "contentType": null, "body": null },
+          "requestVariables": []
+        }
+      ],
+      "auth": { "authType": "inherit", "authActive": true },
+      "headers": []
+    },
+
+    {
+      "v": 1,
+      "name": "🔍 Flight Search",
+      "folders": [
+
+        {
+          "v": 1,
+          "name": "✅ Successful Searches",
+          "folders": [],
+          "requests": [
+            {
+              "v": "1",
+              "id": "search-basic",
+              "name": "Basic search — 2 passengers, price + total_price in response",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "2",          "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "search-cached",
+              "name": "Cached response — run AFTER basic search (meta.cached = true)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "2",          "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            }
+          ],
+          "auth": { "authType": "inherit", "authActive": true },
+          "headers": []
+        },
+
+        {
+          "v": 1,
+          "name": "🔃 Sorting",
+          "folders": [],
+          "requests": [
+            {
+              "v": "1",
+              "id": "sort-price-asc",
+              "name": "Sort by price — ascending (cheapest first)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "1",          "active": true },
+                { "key": "sort",       "value": "price",      "active": true },
+                { "key": "order",      "value": "asc",        "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "sort-price-desc",
+              "name": "Sort by price — descending (most expensive first)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "1",          "active": true },
+                { "key": "sort",       "value": "price",      "active": true },
+                { "key": "order",      "value": "desc",       "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "sort-duration-asc",
+              "name": "Sort by duration — ascending (shortest flight first)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "1",          "active": true },
+                { "key": "sort",       "value": "duration",   "active": true },
+                { "key": "order",      "value": "asc",        "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "sort-departure-asc",
+              "name": "Sort by departure — ascending (earliest first)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "1",          "active": true },
+                { "key": "sort",       "value": "departure",  "active": true },
+                { "key": "order",      "value": "asc",        "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "sort-departure-desc",
+              "name": "Sort by departure — descending (latest first)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",       "value": "DAC",        "active": true },
+                { "key": "to",         "value": "DXB",        "active": true },
+                { "key": "date",       "value": "2026-07-01", "active": true },
+                { "key": "passengers", "value": "1",          "active": true },
+                { "key": "sort",       "value": "departure",  "active": true },
+                { "key": "order",      "value": "desc",       "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            }
+          ],
+          "auth": { "authType": "inherit", "authActive": true },
+          "headers": []
+        },
+
+        {
+          "v": 1,
+          "name": "🎛️ Filtering",
+          "folders": [],
+          "requests": [
+            {
+              "v": "1",
+              "id": "filter-nonstop",
+              "name": "Filter: non-stop only (stops=0)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",          "value": "DAC",        "active": true },
+                { "key": "to",            "value": "DXB",        "active": true },
+                { "key": "date",          "value": "2026-07-01", "active": true },
+                { "key": "passengers",    "value": "2",          "active": true },
+                { "key": "filter[stops]", "value": "0",          "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "filter-one-stop",
+              "name": "Filter: one stop only (stops=1)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",          "value": "DAC",        "active": true },
+                { "key": "to",            "value": "DXB",        "active": true },
+                { "key": "date",          "value": "2026-07-01", "active": true },
+                { "key": "passengers",    "value": "1",          "active": true },
+                { "key": "filter[stops]", "value": "1",          "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "filter-max-price",
+              "name": "Filter: max price $300 per person",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",              "value": "DAC",        "active": true },
+                { "key": "to",                "value": "DXB",        "active": true },
+                { "key": "date",              "value": "2026-07-01", "active": true },
+                { "key": "passengers",        "value": "2",          "active": true },
+                { "key": "filter[max_price]", "value": "300",        "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "filter-airline",
+              "name": "Filter: airline EK only",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",            "value": "DAC",        "active": true },
+                { "key": "to",              "value": "DXB",        "active": true },
+                { "key": "date",            "value": "2026-07-01", "active": true },
+                { "key": "passengers",      "value": "1",          "active": true },
+                { "key": "filter[airline]", "value": "EK",         "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "filter-combined",
+              "name": "Filter: non-stop + max $300, sort duration asc",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from",              "value": "DAC",        "active": true },
+                { "key": "to",                "value": "DXB",        "active": true },
+                { "key": "date",              "value": "2026-07-01", "active": true },
+                { "key": "passengers",        "value": "3",          "active": true },
+                { "key": "filter[stops]",     "value": "0",          "active": true },
+                { "key": "filter[max_price]", "value": "300",        "active": true },
+                { "key": "sort",              "value": "duration",   "active": true },
+                { "key": "order",             "value": "asc",        "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            }
+          ],
+          "auth": { "authType": "inherit", "authActive": true },
+          "headers": []
+        },
+
+        {
+          "v": 1,
+          "name": "❌ Validation Errors",
+          "folders": [],
+          "requests": [
+            {
+              "v": "1",
+              "id": "val-missing-from",
+              "name": "422 — missing 'from'",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "to",   "value": "DXB",        "active": true },
+                { "key": "date", "value": "2026-07-01", "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "val-missing-date",
+              "name": "422 — missing 'date'",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from", "value": "DAC", "active": true },
+                { "key": "to",   "value": "DXB", "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "val-bad-date",
+              "name": "422 — wrong date format (must be Y-m-d)",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from", "value": "DAC",        "active": true },
+                { "key": "to",   "value": "DXB",        "active": true },
+                { "key": "date", "value": "01-07-2026", "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "val-bad-iata",
+              "name": "422 — IATA code not 3 chars",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from", "value": "DACX",       "active": true },
+                { "key": "to",   "value": "DXB",        "active": true },
+                { "key": "date", "value": "2026-07-01", "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "val-bad-sort",
+              "name": "422 — invalid sort value",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/flights/search",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [
+                { "key": "from", "value": "DAC",        "active": true },
+                { "key": "to",   "value": "DXB",        "active": true },
+                { "key": "date", "value": "2026-07-01", "active": true },
+                { "key": "sort", "value": "invalid",    "active": true }
+              ],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            }
+          ],
+          "auth": { "authType": "inherit", "authActive": true },
+          "headers": []
+        }
+
+      ],
+      "auth": { "authType": "inherit", "authActive": true },
+      "headers": [],
+      "requests": []
+    },
+
+    {
+      "v": 1,
+      "name": "📋 Bookings",
+      "folders": [
+
+        {
+          "v": 1,
+          "name": "✅ Successful Bookings",
+          "folders": [],
+          "requests": [
+            {
+              "v": "1",
+              "id": "booking-1pax",
+              "name": "Create booking — EK585 × 1 adult (total = $399)",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"flight_id\": \"4c6a4745cc74c463\",\n  \"passengers\": [\n    {\n      \"first_name\": \"Rahim\",\n      \"last_name\": \"Chowdhury\",\n      \"type\": \"adult\",\n      \"document_number\": \"BD1234567\"\n    }\n  ]\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-2pax",
+              "name": "Create booking — EK585 × 2 passengers (total = $798)",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"flight_id\": \"4c6a4745cc74c463\",\n  \"passengers\": [\n    {\n      \"first_name\": \"Rahim\",\n      \"last_name\": \"Chowdhury\",\n      \"type\": \"adult\",\n      \"document_number\": \"BD1234567\"\n    },\n    {\n      \"first_name\": \"Mina\",\n      \"last_name\": \"Chowdhury\",\n      \"type\": \"child\",\n      \"document_number\": \"BD7654321\"\n    }\n  ]\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-cheapest",
+              "name": "Create booking — BS118 cheapest ($265)",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"flight_id\": \"215bd76a6cd0a07c\",\n  \"passengers\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Smith\",\n      \"type\": \"adult\",\n      \"document_number\": \"GB9876543\"\n    }\n  ]\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-get",
+              "name": "Get booking by reference — replace BK-XXXXXX",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/bookings/BK-XXXXXX",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            }
+          ],
+          "auth": { "authType": "inherit", "authActive": true },
+          "headers": []
+        },
+
+        {
+          "v": 1,
+          "name": "❌ Error Cases",
+          "folders": [],
+          "requests": [
+            {
+              "v": "1",
+              "id": "booking-cache-miss",
+              "name": "422 — flight_id not in cache (must search first)",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"flight_id\": \"nonexistentflight\",\n  \"passengers\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"type\": \"adult\",\n      \"document_number\": \"XX0000000\"\n    }\n  ]\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-no-passengers",
+              "name": "422 — missing passengers field",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"flight_id\": \"4c6a4745cc74c463\"\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-bad-type",
+              "name": "422 — invalid passenger type (must be adult/child/infant)",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"flight_id\": \"4c6a4745cc74c463\",\n  \"passengers\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"type\": \"senior\",\n      \"document_number\": \"XX0000000\"\n    }\n  ]\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-no-flight-id",
+              "name": "422 — missing flight_id field",
+              "method": "POST",
+              "endpoint": "http://localhost:8000/api/bookings",
+              "headers": [
+                { "key": "Content-Type", "value": "application/json", "active": true },
+                { "key": "Accept",       "value": "application/json", "active": true }
+              ],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"passengers\": [\n    {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"type\": \"adult\",\n      \"document_number\": \"XX0000000\"\n    }\n  ]\n}"
+              },
+              "requestVariables": []
+            },
+            {
+              "v": "1",
+              "id": "booking-not-found",
+              "name": "404 — booking reference does not exist",
+              "method": "GET",
+              "endpoint": "http://localhost:8000/api/bookings/BK-INVALID",
+              "headers": [{ "key": "Accept", "value": "application/json", "active": true }],
+              "params": [],
+              "auth": { "authType": "none", "authActive": false },
+              "body": { "contentType": null, "body": null },
+              "requestVariables": []
+            }
+          ],
+          "auth": { "authType": "inherit", "authActive": true },
+          "headers": []
+        }
+
+      ],
+      "auth": { "authType": "inherit", "authActive": true },
+      "headers": [],
+      "requests": []
+    }
+
+  ],
+  "requests": [],
+  "auth": { "authType": "none", "authActive": false },
+  "headers": []
+}
